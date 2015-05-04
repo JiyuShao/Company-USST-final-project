@@ -44,6 +44,8 @@ public class Employee {
 	@JoinColumn(name = "MANAGER_ID",nullable=false)
 	private Manager manager;
 	
+	public Employee() {
+	}
 	
 	public Integer getId() {
 		return id;

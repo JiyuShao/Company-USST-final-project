@@ -151,4 +151,12 @@ public class Manager {
 		this.employees = employees;
 	}
 	
+	public void addEmployee(Employee employee){
+		getEmployees().add(employee);
+		employee.setManager(this);
+	}
+	public void removeEmployee(Employee employee){
+		getEmployees().remove(employee);
+		employee.setManager(null);
+	}
 }

@@ -17,7 +17,6 @@ public class AdminTest {
 	public void initial(){
 		addAdmin();
 		addManager();
-		addEmployee();
 	}
 	//clean up
 	@Test
