@@ -1,5 +1,7 @@
 package company.model;
 
+import static javax.persistence.FetchType.LAZY;
+
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -39,7 +41,7 @@ public class Employee {
 	private Date birthday=new Date(93,11,25);
 	@Enumerated(EnumType.STRING) @Column(name="STATUS",length=4,nullable=false)
 	private Status status =Status.NULL;
-	@ManyToOne(cascade={CascadeType.REFRESH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE}
+	@ManyToOne(fetch = LAZY,cascade={CascadeType.REFRESH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE}
 		,optional=false,targetEntity=Manager.class)
 	@JoinColumn(name = "MANAGER_ID",nullable=false)
 	private Manager manager;

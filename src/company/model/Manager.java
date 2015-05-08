@@ -1,5 +1,7 @@
 package company.model;
 
+import static javax.persistence.FetchType.LAZY;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +46,7 @@ public class Manager {
 	private String site;
 	@Enumerated(EnumType.STRING) @Column(name="STATUS",length=4,nullable=false)
 	private Status status =Status.NULL;
-	@ManyToOne(cascade={CascadeType.REFRESH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE}
+	@ManyToOne(fetch = LAZY,cascade={CascadeType.REFRESH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE}
 		,optional=false,targetEntity=Admin.class)
 	@JoinColumn(name = "ADMIN_ID",nullable=false)
 	private Admin admin;

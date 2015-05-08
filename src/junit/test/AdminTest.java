@@ -119,10 +119,10 @@ public class AdminTest {
 	public void searchAdminQuery() {
 		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
 		EntityManager em=factory.createEntityManager();
-		Query query=em.createQuery("select o from Admin o where o.name=?1");
-		query.setParameter(1, "sjy");
+		Query query=em.createQuery("select o from Admin o where o.adminId=?1");
+		query.setParameter(1, 11111111);
 		Admin admin=(Admin)query.getSingleResult();//List<Admin> admins=query.getResultList()
-		System.out.print(admin.getId()+"\n");//for(Admin admin:admins)
+		System.out.print(admin.getEmail()+"\n");//for(Admin admin:admins)
 		em.close();
 		factory.close();
 	}

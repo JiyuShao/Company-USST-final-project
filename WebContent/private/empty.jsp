@@ -4,15 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Log in</title>
+<title>Test</title>
 </head>
 <body id="page-top" class="index">
-	<jsp:include page="layout/navbar_test.html"></jsp:include>
 	
+	Success!!
+	<form method="post" action="../logout">
+		<p><input type="submit" value="Log Out"/></p>
+	</form>
 	
-	
-	
-	<jsp:include page="layout/javascript.html"></jsp:include>
-	<jsp:include page="layout/footer.html"></jsp:include>
 </body>
 </html>
