@@ -1,6 +1,9 @@
 package junit.test;
 
 
+import java.util.Date;
+import java.text.DateFormat;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -11,12 +14,24 @@ import org.junit.Test;
 import company.model.Admin;
 import company.model.Employee;
 import company.model.Manager;
+import company.model.SignIn;
+import company.model.Status;
 
 public class AdminTest {
+	
+	@Test
+	public void getDate(){
+		Date date = new Date();
+		DateFormat df = DateFormat.getDateTimeInstance();
+		System.out.print(df.format(date)+"\n");
+	}
+	
 	@Test
 	public void initial(){
 		addAdmin();
 		addManager();
+		addEmployee();
+		addSignIn();
 	}
 	//clean up
 	@Test
@@ -24,6 +39,7 @@ public class AdminTest {
 		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
 		EntityManager em=factory.createEntityManager();
 	    em.getTransaction().begin();
+	    em.createNativeQuery("drop table signin").executeUpdate();
 	    em.createNativeQuery("drop table employee").executeUpdate();
 	    em.createNativeQuery("drop table manager").executeUpdate();
 	    em.createNativeQuery("drop table admin").executeUpdate();
@@ -212,6 +228,45 @@ public class AdminTest {
 		
 		em.merge(employee1);
 		em.merge(manager);
+		em.getTransaction().commit();
+		em.close();
+		factory.close();
+	}
+	
+	@Test
+	public void searchEmployee() {
+		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
+		EntityManager em=factory.createEntityManager();
+		Query query=em.createQuery("select o from Employee o where o.employeeId=?1");
+		query.setParameter(1, 888888888);
+		Employee employee=(Employee)query.getSingleResult();
+		System.out.print(employee.getName()+"\n");
+		em.close();
+		factory.close();
+		
+	}
+	
+	//SignIn functions
+	@Test
+	public void addSignIn() {
+		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
+		EntityManager em=factory.createEntityManager();
+		em.getTransaction().begin();
+		Query query=em.createQuery("select o from Employee o where o.employeeId=?1");
+		query.setParameter(1, 888888888);
+		Employee employee=(Employee)query.getSingleResult();
+		
+		SignIn signin1 = new SignIn();
+		Date date = new Date();
+		DateFormat df = DateFormat.getDateTimeInstance();		
+		signin1.setDate(df.format(date));
+		signin1.setStatus(Status.YES);
+		signin1.setEmployee(employee);
+		
+		employee.getSignins().add(signin1);
+		
+		em.merge(signin1);
+		em.merge(employee);
 		em.getTransaction().commit();
 		em.close();
 		factory.close();

@@ -2,7 +2,9 @@ package company.model;
 
 import static javax.persistence.FetchType.LAZY;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -45,6 +48,9 @@ public class Employee {
 		,optional=false,targetEntity=Manager.class)
 	@JoinColumn(name = "MANAGER_ID",nullable=false)
 	private Manager manager;
+	
+	@OneToMany(mappedBy="employee")
+	private List<SignIn> signins = new ArrayList<SignIn>();
 	
 	public Employee() {
 	}
@@ -109,6 +115,22 @@ public class Employee {
 	public void setManager(Manager manager) {
 		this.manager = manager;
 	}
-	
+
+	public List<SignIn> getSignins() {
+		return signins;
+	}
+
+	public void setSignins(List<SignIn> signins) {
+		this.signins = signins;
+	}
+
+	public void addSignIn(SignIn signin){
+		getSignins().add(signin);
+		signin.setEmployee(this);
+	}
+	public void removeSignIn(SignIn signin){
+		getSignins().remove(signin);
+		signin.setEmployee(null);
+	}
 
 }

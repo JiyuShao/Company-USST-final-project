@@ -29,6 +29,12 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		try{
+			HttpSession session = request.getSession(true);
+			session.removeAttribute("user");
+			session.removeAttribute("forwardpath");
+			response.sendRedirect(request.getContextPath() + "/private/privatelogout.jsp");
+			}catch(Exception e){}
 	}
 
 	/**
@@ -36,12 +42,6 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		try{
-			HttpSession session = request.getSession(true);
-			session.removeAttribute("user");
-			session.removeAttribute("forwardpath");
-			response.sendRedirect(request.getContextPath() + "/private/privatelogout.jsp");
-			}catch(Exception e){}
 	}
 
 }
