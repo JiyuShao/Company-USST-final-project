@@ -26,7 +26,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i>
-          <%Admin admin = Dao.find(Admin.class,1);
+          <%Admin admin = Dao.findById(Admin.class,111111111);
           if( admin != null ) { %>
           <%=admin.getName()%>
           <%	} else { %>

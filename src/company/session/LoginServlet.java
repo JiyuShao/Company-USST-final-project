@@ -70,7 +70,7 @@ public class LoginServlet extends HttpServlet {
 					response.sendRedirect(forwardpath);
 					session.removeAttribute("forwardpath");
 				} else {
-					response.sendRedirect(request.getContextPath() + "/private/privatelogout.jsp");
+					response.sendRedirect(request.getContextPath() + "/private/admin.jsp");
 				}					
 				
 			} else {
