@@ -2,6 +2,7 @@ package junit.test;
 
 
 import java.util.Date;
+import java.util.Set;
 import java.text.DateFormat;
 
 import javax.persistence.EntityManager;
@@ -14,8 +15,9 @@ import org.junit.Test;
 import company.model.Admin;
 import company.model.Employee;
 import company.model.Manager;
-import company.model.SignIn;
-import company.model.Status;
+import company.model.Signin;
+import company.model.util.ManagedAdminBean;
+import company.model.util.ManagedManagerBean;
 
 public class AdminTest {
 	
@@ -48,89 +50,28 @@ public class AdminTest {
 	//Functions for admin
 	@Test
 	public void addAdmin() {
-		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
-		EntityManager em=factory.createEntityManager();
-		em.getTransaction().begin();
-		Admin admin =new Admin();
-		admin.setAdminId(111111111);
+		Admin admin = new Admin();
 		admin.setName("sjy");
 		admin.setPassword("sjy1125");
-		em.persist(admin);
-		em.getTransaction().commit();
-		em.close();
-		factory.close();
+		ManagedAdminBean.createNewAdmin(admin);
 	}
 	
 	@Test
 	public void getAdminName() {
-		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
-		EntityManager em=factory.createEntityManager();
-		Admin admin=em.find(Admin.class, 1);
+		Admin admin = ManagedAdminBean.getById(3);
 		System.out.print(admin.getName());
-		em.close();
-		factory.close();
-	}
-	
-	@Test
-	public void getAdminName2() {
-		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
-		EntityManager em=factory.createEntityManager();
-		Admin admin=em.getReference(Admin.class, 1);
-		System.out.print(admin.getName());
-		em.close();
-		factory.close();
 	}
 	
 	@Test
 	public void updateAdminName() {
-		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
-		EntityManager em=factory.createEntityManager();
-		em.getTransaction().begin();
-		Admin admin=em.find(Admin.class, 1);
-		admin.setName("jiyu");
-		em.getTransaction().commit();
-		em.close();
-		factory.close();
-	}
-	
-	@Test
-	public void updateAdminName2() {
-		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
-		EntityManager em=factory.createEntityManager();
-		em.getTransaction().begin();
-		Admin admin=em.find(Admin.class, 1);
-		em.clear();
-		admin.setName("jiyu");
-		em.merge(admin);
-		em.getTransaction().commit();
-		em.close();
-		factory.close();
+		ManagedAdminBean.update(3, "shao", "sjy1125");
 	}
 	
 	@Test
 	public void deleteAdmin() {
-		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
-		EntityManager em=factory.createEntityManager();
-		em.getTransaction().begin();
-		Admin admin=em.find(Admin.class, 1);
-		em.remove(admin);
-		em.getTransaction().commit();
-		em.close();
-		factory.close();
+		ManagedAdminBean.removeById(2);
 	}
-	@Test
-	public void updateAdminQuery() {
-		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
-		EntityManager em=factory.createEntityManager();
-		em.getTransaction().begin();
-		Query query=em.createQuery("update Admin o set o.name=:name where o.id=:id");
-		query.setParameter("name", "jiyu");
-		query.setParameter("id", 1);
-		query.executeUpdate();
-		em.getTransaction().commit();
-		em.close();
-		factory.close();
-	}
+	//wrong
 	@Test
 	public void searchAdminQuery() {
 		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
@@ -146,40 +87,24 @@ public class AdminTest {
 	//Functions for manager
 	@Test
 	public void addManager() {
-		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
-		EntityManager em=factory.createEntityManager();
-		em.getTransaction().begin();
-		Query query=em.createQuery("select o from Admin o where o.name=?1");
-		query.setParameter(1, "sjy");
-		Admin admin=(Admin)query.getSingleResult();
+		
+		Admin admin = ManagedAdminBean.getById(3);
 		
 		Manager manager1 = new Manager();
-		manager1.setManagerId(666666666);
 		manager1.setName("meng");
+		manager1.setStatus("YES");
 		manager1.setPassword("zmf1220");
-		manager1.setSite("Vancouver");
 		manager1.setAdmin(admin);
-		admin.getManagers().add(manager1);
 		
-		em.merge(manager1);
-		em.merge(admin);
-		em.getTransaction().commit();
-		em.close();
-		factory.close();
+		ManagedManagerBean.createNewManager(3, manager1);
 	}
 	
 	@Test
 	public void searchManagerQuery() {
-		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
-		EntityManager em=factory.createEntityManager();
-		Query query=em.createQuery("select o from Manager o where o.managerId=?1");
-		query.setParameter(1, 666666666);
-		Manager manager=(Manager)query.getSingleResult();//List<Admin> admins=query.getResultList()
-		System.out.print(manager.getId()+"\n");//for(Admin admin:admins)
-		em.close();
-		factory.close();
+		Manager manager = ManagedManagerBean.getById(4);
+		System.out.print(manager.getName());
 	}
-	
+	//wrong
 	@Test
 	public void updateManagerQuery() {
 		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
@@ -196,17 +121,7 @@ public class AdminTest {
 	
 	@Test
 	public void deleteManager() {
-		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
-		EntityManager em=factory.createEntityManager();
-		em.getTransaction().begin();
-		Query query=em.createQuery("select o from Manager o where o.managerId=?1");
-		query.setParameter(1, 666666666);
-		Manager manager=(Manager)query.getSingleResult();
-		manager.getAdmin().getManagers().remove(manager);
-		em.remove(manager);
-		em.getTransaction().commit();
-		em.close();
-		factory.close();
+		ManagedManagerBean.removeById(4);
 	}
 	
 	//Employee functions
@@ -256,11 +171,11 @@ public class AdminTest {
 		query.setParameter(1, 888888888);
 		Employee employee=(Employee)query.getSingleResult();
 		
-		SignIn signin1 = new SignIn();
+		Signin signin1 = new Signin();
 		Date date = new Date();
 		DateFormat df = DateFormat.getDateTimeInstance();		
-		signin1.setDate(df.format(date));
-		signin1.setStatus(Status.YES);
+		signin1.setTime(df.format(date));
+		signin1.setStatus("YES");
 		signin1.setEmployee(employee);
 		
 		employee.getSignins().add(signin1);
