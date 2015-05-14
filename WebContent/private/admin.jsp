@@ -26,7 +26,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i>
-          <%Admin admin = ManagedAdminBean.getById(1);
+          <%Admin admin = ManagedAdminBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
           if( admin != null ) { %>
           <%=admin.getName()%>
           <%	} else { %>
@@ -73,12 +73,6 @@
     <div class="col-sm-9">
       	
       <!-- column 2 -->	
-      <ul class="list-inline pull-right">
-         <li><a href="#"><i class="glyphicon glyphicon-cog"></i></a></li>
-         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-comment"></i><span class="count">3</span></a><ul class="dropdown-menu" role="menu"><li><a href="#">1. Is there a way..</a></li><li><a href="#">2. Hello, admin. I would..</a></li><li><a href="#"><strong>All messages</strong></a></li></ul></li>
-         <li><a href="#"><i class="glyphicon glyphicon-user"></i></a></li>
-         <li><a title="Add Widget" data-toggle="modal" href="#addWidgetModal"><span class="glyphicon glyphicon-plus-sign"></span> Add Widget</a></li>
-      </ul>
       <a href="#"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>  
       
       	<hr>

@@ -2,7 +2,6 @@ package junit.test;
 
 
 import java.util.Date;
-import java.util.Set;
 import java.text.DateFormat;
 
 import javax.persistence.EntityManager;

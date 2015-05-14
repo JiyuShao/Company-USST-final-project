@@ -1,6 +1,7 @@
 package company.session;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import company.model.Admin;
-import company.model.util.ManagedAdminBean;
+import company.model.*;
+import company.model.util.*;
 
 /**
  * Servlet implementation class LoginServlet
@@ -41,9 +42,14 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String user = request.getParameter("user");
 		String pwd = request.getParameter("password");
+		String accountType = request.getParameter("accountType");
 		
-		Admin admin = ManagedAdminBean.getById(2);
-		String password = admin.getPassword();
+		String password="";
+				
+		if(accountType.equals("Admin")){
+			Admin admin = ManagedAdminBean.getById(Integer.parseInt(user));
+			password = admin.getPassword();
+		}
 		
 		if(!user.isEmpty() && password.equals(pwd)) {
 			
@@ -61,9 +67,8 @@ public class LoginServlet extends HttpServlet {
 			}					
 			
 		} else {
-			
-			response.sendRedirect(request.getContextPath() + "/login.html");
-			
+			PrintWriter out = response.getWriter();
+			out.print("<script>alert('Login Error!!');window.location.href='"+request.getContextPath()+"/login.html';</script>");
 		}
 		
 	}

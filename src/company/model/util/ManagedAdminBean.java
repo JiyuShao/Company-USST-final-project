@@ -1,7 +1,5 @@
 package company.model.util;
 
-import java.util.Set;
-
 import javax.persistence.EntityManager;
 
 import company.model.Admin;
