@@ -16,6 +16,7 @@ import company.model.Employee;
 import company.model.Manager;
 import company.model.Signin;
 import company.model.util.ManagedAdminBean;
+import company.model.util.ManagedEmployeeBean;
 import company.model.util.ManagedManagerBean;
 
 public class AdminTest {
@@ -87,7 +88,7 @@ public class AdminTest {
 	@Test
 	public void addManager() {
 		
-		Admin admin = ManagedAdminBean.getById(3);
+		Admin admin = ManagedAdminBean.getById(1);
 		
 		Manager manager1 = new Manager();
 		manager1.setName("meng");
@@ -95,27 +96,19 @@ public class AdminTest {
 		manager1.setPassword("zmf1220");
 		manager1.setAdmin(admin);
 		
-		ManagedManagerBean.createNewManager(3, manager1);
+		ManagedManagerBean.createNewManager(1, manager1);
 	}
 	
 	@Test
-	public void searchManagerQuery() {
-		Manager manager = ManagedManagerBean.getById(4);
-		System.out.print(manager.getName());
+	public void getManagerName() {
+		String adminName = ManagedManagerBean.getAdminName(1);
+		System.out.print(adminName);
 	}
-	//wrong
+
 	@Test
-	public void updateManagerQuery() {
-		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
-		EntityManager em=factory.createEntityManager();
-		em.getTransaction().begin();
-		Query query=em.createQuery("update Manager o set o.name=:name where o.managerId=:id");
-		query.setParameter("name", "fei");
-		query.setParameter("id", 666666666);
-		query.executeUpdate();
-		em.getTransaction().commit();
-		em.close();
-		factory.close();
+	public void updateManager() {
+		ManagedManagerBean.update(1, "zhang", "zmf1220", "NO");
+		
 	}
 	
 	@Test
@@ -126,39 +119,28 @@ public class AdminTest {
 	//Employee functions
 	@Test
 	public void addEmployee() {
-		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
-		EntityManager em=factory.createEntityManager();
-		em.getTransaction().begin();
-		Query query=em.createQuery("select o from Manager o where o.managerId=?1");
-		query.setParameter(1, 666666666);
-		Manager manager=(Manager)query.getSingleResult();
+		Manager manager = ManagedManagerBean.getById(1);
 		
 		Employee employee1 = new Employee();
-		employee1.setEmployeeId(888888888);
 		employee1.setName("duan");
 		employee1.setPassword("12345678");
+		employee1.setStatus("NULL");
 		employee1.setManager(manager);		
-		manager.getEmployees().add(employee1);
-		
-		em.merge(employee1);
-		em.merge(manager);
-		em.getTransaction().commit();
-		em.close();
-		factory.close();
+
+		ManagedEmployeeBean.createNewEmployee(1, employee1);
 	}
 	
 	@Test
-	public void searchEmployee() {
-		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
-		EntityManager em=factory.createEntityManager();
-		Query query=em.createQuery("select o from Employee o where o.employeeId=?1");
-		query.setParameter(1, 888888888);
-		Employee employee=(Employee)query.getSingleResult();
-		System.out.print(employee.getName()+"\n");
-		em.close();
-		factory.close();
-		
+	public void getEmployeeName() {
+		Employee employee = ManagedEmployeeBean.getById(1);
+		System.out.print(employee.getName());
 	}
+	
+	@Test
+	public void deleteEmployee() {
+		ManagedEmployeeBean.removeById(2);
+	}
+	
 	
 	//SignIn functions
 	@Test

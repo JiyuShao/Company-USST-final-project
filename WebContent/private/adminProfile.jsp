@@ -27,11 +27,11 @@
         <li class="dropdown">
           <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="./admin.jsp"><i class="glyphicon glyphicon-user"></i>
           <%Admin admin = ManagedAdminBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
-          if( admin != null && session.getAttribute("type").equals("Admin")) { %>
+          if( admin != null  && session.getAttribute("type").equals("Admin")){ %>
           <%=admin.getName()%>
-          <%	} else { 
-  			out.print("<script>alert('Login Error!!');window.location.href='"+request.getContextPath()+"/login.html';</script>");
-          } %>
+          <%	} else { %>
+				<h2>NULL</h2>
+		<%	} %>
           
           </a>
 				
@@ -44,8 +44,6 @@
 <!-- /Header -->
 
 <!-- Main -->
-<div class="container-fluid">
-<div class="row">
 	<div class="col-sm-3">
       <!-- Left column -->
       <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Tools</strong></a>  
@@ -54,7 +52,7 @@
       
       <ul class="list-unstyled">
         <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">
-          <h5>Settings</h5>
+          <h5>Settings </h5>
           </a>
             <ul class="list-unstyled collapse in" id="userMenu">
                 <li class="active"> <a href="./admin.jsp"><i class="glyphicon glyphicon-home"></i> Home</a></li>
@@ -73,44 +71,66 @@
     <div class="col-sm-9">
       	
       <!-- column 2 -->	
-      <a href="./admin.jsp"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>  
+      <a href="./adminProfile.jsp"><strong><i class="glyphicon glyphicon-dashboard"></i> My Profile</strong></a>  
       
       	<hr>
       
 		<div class="row">
             <!-- center left-->	
          	<div class="col-md-6">
-			  <div class="well">Inbox Messages <span class="badge pull-right">3</span></div>
-              <hr>
-              <div class="panel panel-default">
-                  <div class="panel-heading"><h4>Notices</h4></div>
-                  <div class="panel-body">
-                    
-                  This is a dashboard-style layout that uses Bootstrap 3. You can use this template as a starting point to create something more unique.
-                  <br><br>
-                  Visit the Bootstrap Playground at <a href="http://bootply.com">Bootply</a> to tweak this layout or discover more useful code snippets.
-                  </div>
-              	</div>          
-              
-          	</div><!--/col-->
-        	<div class="col-md-6">
-				    <a href="#"><strong><i class="glyphicon glyphicon-comment"></i> Discussions</strong></a>  
-      
-			      <hr>
-			      
-			      <div class="row">
-			        <div class="col-md-12">
-			          <ul class="list-group">
-			            <li class="list-group-item"><a href="#"><i class="glyphicon glyphicon-flash"></i> <small>(3 mins ago)</small> The 3rd page reports don't contain any links. Does anyone know why..</a></li>
-			            <li class="list-group-item"><a href="#"><i class="glyphicon glyphicon-flash"></i> <small>(1 hour ago)</small> Hi all, I've just post a report that show the relationship betwe..</a></li>
-			            <li class="list-group-item"><a href="#"><i class="glyphicon glyphicon-heart"></i> <small>(2 hrs ago)</small> Paul. That document you posted yesterday doesn't seem to contain the over..</a></li>
-			            <li class="list-group-item"><a href="#"><i class="glyphicon glyphicon-heart-empty"></i> <small>(4 hrs ago)</small> The map service on c243 is down today. I will be fixing the..</a></li>
-			            <li class="list-group-item"><a href="#"><i class="glyphicon glyphicon-heart"></i> <small>(yesterday)</small> I posted a new document that shows how to install the services layer..</a></li>
-			            <li class="list-group-item"><a href="#"><i class="glyphicon glyphicon-flash"></i> <small>(yesterday)</small> ..</a></li>
-			          </ul>
-			        </div>
-			      </div>
-			</div><!--/col-span-6-->      
+				<div class="form-group">
+					<form class="form-horizontal" action="../updateAdmin" method="post">
+						<div class="form-group">
+					    	<label for="user" class="col-sm-2 control-label">ID</label>
+					    	<div class="col-sm-10">
+					      	<input type="text" class="form-control" name="user" placeholder="ID" value="<%=admin.getAdminId()%>" disabled="true">
+					   		</div>
+					  	</div>
+					  	<div class="form-group">
+					    	<label for="name" class="col-sm-2 control-label">Name</label>
+					    	<div class="col-sm-10">
+					      	<input type="text" class="form-control" name="name" placeholder="Name" value="<%=admin.getName()%>">
+					  		</div>
+					  	</div>
+					  	<div class="form-group">
+					   		<label for="birthday" class="col-sm-2 control-label">Birthday</label>
+					    	<div class="col-sm-10">
+					      	<input type="text" class="form-control" name="birthday" placeholder="Birthday" value="<%=admin.getBirthday()%>">
+					    	</div>
+					  	</div>
+					  	<div class="form-group">
+					   		<label for="email" class="col-sm-2 control-label">Email</label>
+					    	<div class="col-sm-10">
+					      	<input type="text" class="form-control" name="email" placeholder="Email" value="<%=admin.getEmail()%>">
+					    	</div>
+					  	</div>
+					  	<div class="form-group">
+					   		<label for="gender" class="col-sm-2 control-label">Gender</label>
+					    	<div class="col-sm-10">
+					      	<input type="text" class="form-control" name="gender" placeholder="Gender" value="<%=admin.getGender()%>">
+					    	</div>
+					  	</div>
+					  	<div class="form-group">
+					   		<label for="phone" class="col-sm-2 control-label">Phone</label>
+					    	<div class="col-sm-10">
+					      	<input type="text" class="form-control" name="phone" placeholder="Phone" value="<%=admin.getPhone()%>">
+					    	</div>
+					  	</div>
+					  	<div class="form-group">
+					   		<label for="password" class="col-sm-2 control-label">Password</label>
+					    	<div class="col-sm-10">
+					      	<input type="password" class="form-control" name="password" placeholder="Password">
+					    	</div>
+					  	</div>
+					  	<div class="form-group">
+					    	<div class="col-sm-offset-2 col-sm-10">
+					      	<button type="submit" class="btn btn-default">Submit</button>
+					    	</div>
+					  	</div>
+					  	
+					</form>
+
+				</div>
   	</div><!--/col-span-9-->
 </div>
 </div>

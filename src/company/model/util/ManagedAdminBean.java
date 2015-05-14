@@ -40,6 +40,22 @@ public class ManagedAdminBean {
 	    }
 	}
 	
+	public static void updateFull(Integer adminId, String name, Integer birthday, String email, String gender, String phone){
+	    EntityManager em = JPAResourceBean.getEMF().createEntityManager();
+	    try{
+	        em.getTransaction().begin();
+	        Admin admin = em.find(Admin.class, adminId);
+	        admin.setName(name);
+	        admin.setBirthday(birthday);
+	        admin.setEmail(email);
+	        admin.setGender(gender);
+	        admin.setPhone(phone);
+	        em.getTransaction().commit();
+	    }finally{
+	        em.close();
+	    }
+	}
+	
 	public static void addManager(Integer adminId, Manager manager){
 	    EntityManager em = JPAResourceBean.getEMF().createEntityManager();
 	    try{

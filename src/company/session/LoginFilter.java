@@ -50,15 +50,6 @@ public class LoginFilter implements Filter {
 			res.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			
 		} else if (session.isNew() || session.getAttribute("user") == null) {
-			
-			String uri = req.getRequestURI();
-			uri = (uri == null || uri.isEmpty()) ? "" : uri;
-			
-			String query = req.getQueryString();
-			query = (query == null || query.isEmpty()) ? "" : ("?" + query);
-			
-			session.setAttribute("forwardpath", uri + query);
-
 			String ajaxRequest = req.getHeader("x-requested-with");
 			if(ajaxRequest != null && ajaxRequest.equalsIgnoreCase("XMLHttpRequest")) {
 				// Non-authorized Ajax request

@@ -45,26 +45,26 @@ public class LoginServlet extends HttpServlet {
 		String accountType = request.getParameter("accountType");
 		
 		String password="";
+		String path="";
 				
 		if(accountType.equals("Admin")){
 			Admin admin = ManagedAdminBean.getById(Integer.parseInt(user));
 			password = admin.getPassword();
+			path = "/private/admin.jsp";
+		}else if(accountType.equals("Manager")){
+			Manager manager = ManagedManagerBean.getById(Integer.parseInt(user));
+			password = manager.getPassword();
+			path = "/private/manager.jsp";
 		}
 		
 		if(!user.isEmpty() && password.equals(pwd)) {
 			
 			HttpSession session = request.getSession(true);
 			session.setAttribute("user", user);
+			session.setAttribute("type", accountType);
 			session.setMaxInactiveInterval(600);
-			
-			String forwardpath = (String) session.getAttribute("forwardpath");
-			
-			if(forwardpath!=null) {
-				response.sendRedirect(forwardpath);
-				session.removeAttribute("forwardpath");
-			} else {
-				response.sendRedirect(request.getContextPath() + "/private/admin.jsp");
-			}					
+			response.sendRedirect(request.getContextPath()+path);
+								
 			
 		} else {
 			PrintWriter out = response.getWriter();
