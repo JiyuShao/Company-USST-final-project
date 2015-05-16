@@ -133,7 +133,7 @@ public class AdminTest {
 	@Test
 	public void getEmployeeName() {
 		Employee employee = ManagedEmployeeBean.getById(1);
-		System.out.print(employee.getName());
+		System.out.print(employee.getPassword());
 	}
 	
 	@Test

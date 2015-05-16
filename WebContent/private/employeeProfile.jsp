@@ -20,15 +20,15 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="./admin.jsp">Administration</a>
+      <a class="navbar-brand" href="./employee.jsp">Employee</a>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="./admin.jsp"><i class="glyphicon glyphicon-user"></i>
-          <%Admin admin = ManagedAdminBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
-          if( admin != null  && session.getAttribute("type").equals("Admin")){ %>
-          <%=admin.getName()%>
+          <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="./employee.jsp"><i class="glyphicon glyphicon-user"></i>
+          <%Employee employee = ManagedEmployeeBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
+          if( employee != null  && session.getAttribute("type").equals("Employee")) { %>
+          <%=employee.getName()%>
           <%	} else { 
   			out.print("<script>alert('No permission!');window.location.href='"+request.getContextPath()+"/login.html';</script>");
           } %>
@@ -44,6 +44,8 @@
 <!-- /Header -->
 
 <!-- Main -->
+<div class="container-fluid">
+<div class="row">
 	<div class="col-sm-3">
       <!-- Left column -->
       <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Tools</strong></a>  
@@ -52,12 +54,12 @@
       
       <ul class="list-unstyled">
         <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">
-          <h5>Settings </h5>
+          <h5>Settings</h5>
           </a>
             <ul class="list-unstyled collapse in" id="userMenu">
-                <li class="active"> <a href="./admin.jsp"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+                <li class="active"> <a href="./employee.jsp"><i class="glyphicon glyphicon-home"></i> Home</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> Messages <span class="badge badge-info">4</span></a></li>
-                <li><a href="./adminProfile.jsp"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
+                <li><a href="./employeeProfile.jsp"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Management</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-flag"></i> Reports</a></li>
                 <li><a href="../logout"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
@@ -71,7 +73,7 @@
     <div class="col-sm-9">
       	
       <!-- column 2 -->	
-      <a href="./adminProfile.jsp"><strong><i class="glyphicon glyphicon-dashboard"></i> My Profile</strong></a>  
+      <a href="./employeeProfile.jsp"><strong><i class="glyphicon glyphicon-dashboard"></i> My Profile</strong></a>  
       
       	<hr>
       
@@ -83,37 +85,43 @@
 						<div class="form-group">
 					    	<label for="user" class="col-sm-2 control-label">ID</label>
 					    	<div class="col-sm-10">
-					      	<input type="text" class="form-control" name="user" placeholder="ID" value="<%=admin.getAdminId()%>" disabled="true">
+					      	<input type="text" class="form-control" name="user" placeholder="ID" value="<%=employee.getEmployeeId()%>" disabled="true">
+					   		</div>
+					  	</div>
+					  	<div class="form-group">
+					    	<label for="adminName" class="col-sm-2 control-label">AdminName</label>
+					    	<div class="col-sm-10">
+					      	<input type="text" class="form-control" name="adminName" placeholder="AdminName" value="<%=ManagedEmployeeBean.getManagerName(Integer.parseInt(session.getAttribute("user").toString())) %>" disabled="true">
 					   		</div>
 					  	</div>
 					  	<div class="form-group">
 					    	<label for="name" class="col-sm-2 control-label">Name</label>
 					    	<div class="col-sm-10">
-					      	<input type="text" class="form-control" name="name" placeholder="Name" value="<%=admin.getName()%>">
+					      	<input type="text" class="form-control" name="name" placeholder="Name" value="<%=employee.getName()%>">
 					  		</div>
 					  	</div>
 					  	<div class="form-group">
 					   		<label for="birthday" class="col-sm-2 control-label">Birthday</label>
 					    	<div class="col-sm-10">
-					      	<input type="text" class="form-control" name="birthday" placeholder="Birthday" value="<%=admin.getBirthday()%>">
+					      	<input type="text" class="form-control" name="birthday" placeholder="Birthday" value="<%=employee.getBirthday()%>">
 					    	</div>
 					  	</div>
 					  	<div class="form-group">
 					   		<label for="email" class="col-sm-2 control-label">Email</label>
 					    	<div class="col-sm-10">
-					      	<input type="text" class="form-control" name="email" placeholder="Email" value="<%=admin.getEmail()%>">
+					      	<input type="text" class="form-control" name="email" placeholder="Email" value="<%=employee.getEmail()%>">
 					    	</div>
 					  	</div>
 					  	<div class="form-group">
 					   		<label for="gender" class="col-sm-2 control-label">Gender</label>
 					    	<div class="col-sm-10">
-					      	<input type="text" class="form-control" name="gender" placeholder="Gender" value="<%=admin.getGender()%>">
+					      	<input type="text" class="form-control" name="gender" placeholder="Gender" value="<%=employee.getGender()%>">
 					    	</div>
 					  	</div>
 					  	<div class="form-group">
 					   		<label for="phone" class="col-sm-2 control-label">Phone</label>
 					    	<div class="col-sm-10">
-					      	<input type="text" class="form-control" name="phone" placeholder="Phone" value="<%=admin.getPhone()%>">
+					      	<input type="text" class="form-control" name="phone" placeholder="Phone" value="<%=employee.getPhone()%>">
 					    	</div>
 					  	</div>
 					  	<div class="form-group">
@@ -132,6 +140,8 @@
 
 				</div>
   	</div><!--/col-span-9-->
+</div>
+</div>
 </div>
 </div>
 <!-- /Main -->

@@ -29,8 +29,8 @@
           <%Manager manager = ManagedManagerBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
           if( manager != null  && session.getAttribute("type").equals("Manager")) { %>
           <%=manager.getName()%>
-          <%	} else { 
-  			out.print("<script>alert('Login Error!!');window.location.href='"+request.getContextPath()+"/login.html';</script>");
+         <%	} else { 
+  			out.print("<script>alert('No permission!');window.location.href='"+request.getContextPath()+"/login.html';</script>");
           } %>
           
           </a>
@@ -81,7 +81,7 @@
             <!-- center left-->	
          	<div class="col-md-6">
 				<div class="form-group">
-					<form class="form-horizontal" action="../updateManager" method="post">
+					<form class="form-horizontal" action="../updateProfile" method="post">
 						<div class="form-group">
 					    	<label for="user" class="col-sm-2 control-label">ID</label>
 					    	<div class="col-sm-10">
@@ -122,12 +122,6 @@
 					   		<label for="phone" class="col-sm-2 control-label">Phone</label>
 					    	<div class="col-sm-10">
 					      	<input type="text" class="form-control" name="phone" placeholder="Phone" value="<%=manager.getPhone()%>">
-					    	</div>
-					  	</div>
-					  	<div class="form-group">
-					   		<label for="status" class="col-sm-2 control-label">Status</label>
-					    	<div class="col-sm-10">
-					      	<input type="text" class="form-control" name="status" placeholder="Status" value="<%=manager.getStatus()%>">
 					    	</div>
 					  	</div>
 					  	<div class="form-group">

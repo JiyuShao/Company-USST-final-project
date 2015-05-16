@@ -88,7 +88,7 @@ public class ManagedManagerBean {
 	    }
 	}
 	
-	public static void updateFull(Integer managerId, String name,Integer birthday, String email, String gender, String phone, String status){
+	public static void updateFull(Integer managerId, String name,Integer birthday, String email, String gender, String phone){
 	    EntityManager em = JPAResourceBean.getEMF().createEntityManager();
 	    try{
 	        em.getTransaction().begin();
@@ -98,7 +98,6 @@ public class ManagedManagerBean {
 	        manager.setEmail(email);
 	        manager.setGender(gender);
 	        manager.setPhone(phone);
-	        manager.setStatus(status);
 	        em.getTransaction().commit();
 	    }finally{
 	        em.close();

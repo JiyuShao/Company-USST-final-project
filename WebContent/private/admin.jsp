@@ -30,7 +30,7 @@
           if( admin != null && session.getAttribute("type").equals("Admin")) { %>
           <%=admin.getName()%>
           <%	} else { 
-  			out.print("<script>alert('Login Error!!');window.location.href='"+request.getContextPath()+"/login.html';</script>");
+  			out.print("<script>alert('No permission!');window.location.href='"+request.getContextPath()+"/login.html';</script>");
           } %>
           
           </a>

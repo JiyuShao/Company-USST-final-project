@@ -20,15 +20,15 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="./manager.jsp">Manager</a>
+      <a class="navbar-brand" href="./employee.jsp">Employee</a>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="./manager.jsp"><i class="glyphicon glyphicon-user"></i>
-          <%Manager manager = ManagedManagerBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
-          if( manager != null  && session.getAttribute("type").equals("Manager")) { %>
-          <%=manager.getName()%>
+          <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="./employee.jsp"><i class="glyphicon glyphicon-user"></i>
+          <%Employee employee = ManagedEmployeeBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
+          if( employee != null  && session.getAttribute("type").equals("Employee")) { %>
+          <%=employee.getName()%>
           <%	} else { 
   			out.print("<script>alert('No permission!');window.location.href='"+request.getContextPath()+"/login.html';</script>");
           } %>
@@ -57,9 +57,9 @@
           <h5>Settings</h5>
           </a>
             <ul class="list-unstyled collapse in" id="userMenu">
-                <li class="active"> <a href="./manager.jsp"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+                <li class="active"> <a href="./employee.jsp"><i class="glyphicon glyphicon-home"></i> Home</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> Messages <span class="badge badge-info">4</span></a></li>
-                <li><a href="./managerProfile.jsp"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
+                <li><a href="./employeeProfile.jsp"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Management</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-flag"></i> Reports</a></li>
                 <li><a href="../logout"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
@@ -73,7 +73,7 @@
     <div class="col-sm-9">
       	
       <!-- column 2 -->	
-      <a href="./manager.jsp"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>  
+      <a href="./employee.jsp"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>  
       
       	<hr>
       

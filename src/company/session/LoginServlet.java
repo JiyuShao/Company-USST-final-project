@@ -55,6 +55,10 @@ public class LoginServlet extends HttpServlet {
 			Manager manager = ManagedManagerBean.getById(Integer.parseInt(user));
 			password = manager.getPassword();
 			path = "/private/manager.jsp";
+		}else if(accountType.equals("Employee")){
+			Employee employee = ManagedEmployeeBean.getById(Integer.parseInt(user));
+			password = employee.getPassword();
+			path = "/private/employee.jsp";
 		}
 		
 		if(!user.isEmpty() && password.equals(pwd)) {
@@ -64,7 +68,6 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("type", accountType);
 			session.setMaxInactiveInterval(600);
 			response.sendRedirect(request.getContextPath()+path);
-								
 			
 		} else {
 			PrintWriter out = response.getWriter();
