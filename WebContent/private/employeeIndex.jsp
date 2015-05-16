@@ -1,18 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="company.model.*,company.model.util.*"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+    pageEncoding="UTF-8" import="company.model.*,company.model.util.*,javax.persistence.EntityManager"%>
+    <!DOCTYPE html>  
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Bootply" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="../css/bootstrap.css" rel="stylesheet">
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/styles.css" rel="stylesheet">
+<script type="text/javascript" src="../js/bootstrap.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
+
 <% 		  String path = "";
 		  String name = "";
 		  String title = "";
-          if(session.getAttribute("type").equals("Manager")){
-          	Manager manager = ManagedManagerBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
+		  Manager manager = null;
+          if(session.getAttribute("type").equals("Admin")){
+        	  Admin admin = ManagedAdminBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
+        	  if(admin != null){
+        	  path = "./admin";
+        	  name=admin.getName();
+        	  title="Administriation";
+        	  }
+          } else if(session.getAttribute("type").equals("Manager")){
+          	manager = ManagedManagerBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
           	if(manager != null){
           		path = "./manager";
           		name = manager.getName();
@@ -78,49 +91,52 @@
     <div class="col-sm-9">
       	
       <!-- column 2 -->	
-      <a href=<%=path+".jsp"%>><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>  
+      <a href=<%=path+".jsp"%>><strong><i class="glyphicon glyphicon-dashboard"></i> Employee Index(<%=name %>)</strong></a>  
       
       	<hr>
-      
+      	<form>
 		<div class="row">
             <!-- center left-->	
-         	<div class="col-md-6">
-			  <div class="well">Inbox Messages <span class="badge pull-right">3</span></div>
-              <hr>
-              <div class="panel panel-default">
-                  <div class="panel-heading"><h4>Notices</h4></div>
-                  <div class="panel-body">
-                    
-                  This is a dashboard-style layout that uses Bootstrap 3. You can use this template as a starting point to create something more unique.
-                  <br><br>
-                  Visit the Bootstrap Playground at <a href="http://bootply.com">Bootply</a> to tweak this layout or discover more useful code snippets.
-                  </div>
-              	</div>          
-              
-          	</div><!--/col-->
-        	<div class="col-md-6">
-				    <a href="#"><strong><i class="glyphicon glyphicon-comment"></i> Discussions</strong></a>  
-      
-			      <hr>
-			      
-			      <div class="row">
-			        <div class="col-md-12">
-			          <ul class="list-group">
-			            <li class="list-group-item"><a href="#"><i class="glyphicon glyphicon-flash"></i> <small>(3 mins ago)</small> The 3rd page reports don't contain any links. Does anyone know why..</a></li>
-			            <li class="list-group-item"><a href="#"><i class="glyphicon glyphicon-flash"></i> <small>(1 hour ago)</small> Hi all, I've just post a report that show the relationship betwe..</a></li>
-			            <li class="list-group-item"><a href="#"><i class="glyphicon glyphicon-heart"></i> <small>(2 hrs ago)</small> Paul. That document you posted yesterday doesn't seem to contain the over..</a></li>
-			            <li class="list-group-item"><a href="#"><i class="glyphicon glyphicon-heart-empty"></i> <small>(4 hrs ago)</small> The map service on c243 is down today. I will be fixing the..</a></li>
-			            <li class="list-group-item"><a href="#"><i class="glyphicon glyphicon-heart"></i> <small>(yesterday)</small> I posted a new document that shows how to install the services layer..</a></li>
-			            <li class="list-group-item"><a href="#"><i class="glyphicon glyphicon-flash"></i> <small>(yesterday)</small> ..</a></li>
-			          </ul>
-			        </div>
-			      </div>
-			</div><!--/col-span-6-->      
-  	</div><!--/col-span-9-->
-</div>
-</div>
+         	<div class="col-md-9">
+	         	<table class="table table-striped table-hover">
+					    <thead>
+					    <tr>
+					        <th class="col-md-3">ID</th>
+					        <th class="col-md-3">Name</th>
+					        <th class="col-md-3">Status</th>
+					        <th class="col-md-3">Item Price</th>
+					    </tr>
+					    	
+					    <tr>
+				         <td><input type="radio" name="optionsRadios"  value="option1"></td>
+				         <td>1</td>
+				         <td>1</td>
+				         <td>1</td>
+						</tr>
+						<tr>
+				         <td><input type="radio" name="optionsRadios" value="option2"></td>
+				         <td>1</td>
+				         <td>1</td>
+				         <td>1</td>
+						</tr>
+		    		</thead>
+				</table>
+			</div>
+		</div>
+		</form>
+	 </div>
+ </div>		  
 </div>
 <!-- /Main -->
-
+<% 
+EntityManager em = JPAResourceBean.getEMF().createEntityManager();
+manager = em.find(Manager.class, Integer.parseInt(session.getAttribute("user").toString()));
+if(manager != null){
+for(Employee employee: manager.getEmployees()) { %>
+<h2><%=employee.getName()%></h2>
+<% }
+} else { %>
+	<h2>No Employee Found</h2>
+<% } %>	
 </body>
 </html>

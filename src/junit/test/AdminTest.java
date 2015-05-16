@@ -15,6 +15,7 @@ import company.model.Admin;
 import company.model.Employee;
 import company.model.Manager;
 import company.model.Signin;
+import company.model.util.JPAResourceBean;
 import company.model.util.ManagedAdminBean;
 import company.model.util.ManagedEmployeeBean;
 import company.model.util.ManagedManagerBean;
@@ -122,8 +123,8 @@ public class AdminTest {
 		Manager manager = ManagedManagerBean.getById(1);
 		
 		Employee employee1 = new Employee();
-		employee1.setName("duan");
-		employee1.setPassword("12345678");
+		employee1.setName("Huang");
+		employee1.setPassword("123456");
 		employee1.setStatus("NULL");
 		employee1.setManager(manager);		
 
@@ -166,5 +167,17 @@ public class AdminTest {
 		em.getTransaction().commit();
 		em.close();
 		factory.close();
+	}
+	
+	
+	@Test
+	public void searchEmployee(){
+		EntityManager em = JPAResourceBean.getEMF().createEntityManager();
+		Manager manager = em.find(Manager.class, 1);
+		for(Employee employee: manager.getEmployees()) {
+			System.out.print(employee.getName());
+		}
+		em.close();
+		
 	}
 }

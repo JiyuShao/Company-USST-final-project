@@ -4,11 +4,24 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Administration</title>
 <meta name="generator" content="Bootply" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/styles.css" rel="stylesheet">
+<% 		  String path = "";
+		  String name = "";
+		  String title = "";
+          if(session.getAttribute("type").equals("Admin")){
+        	  Admin admin = ManagedAdminBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
+        	  if(admin != null){
+        	  path = "./admin";
+        	  name=admin.getName();
+        	  title="Administriation";
+        	  }
+          } else { 
+  			out.print("<script>alert('No permission!');window.location.href='"+request.getContextPath()+"/login.html';</script>");
+          } %>
+<title><%=title%></title>
 </head>
 <body>
 <!-- Header -->
@@ -20,20 +33,12 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="./admin.jsp">Administration</a>
+      <a class="navbar-brand" href=<%=path+".jsp"%>><%=title%></a>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="./admin.jsp"><i class="glyphicon glyphicon-user"></i>
-          <%Admin admin = ManagedAdminBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
-          if( admin != null && session.getAttribute("type").equals("Admin")) { %>
-          <%=admin.getName()%>
-          <%	} else { 
-  			out.print("<script>alert('No permission!');window.location.href='"+request.getContextPath()+"/login.html';</script>");
-          } %>
-          
-          </a>
+          <a class="dropdown-toggle" role="button" data-toggle="dropdown" href=<%=path+".jsp"%>><i class="glyphicon glyphicon-user"></i><%=name%></a>
 				
         </li>
         <li><a href="../logout"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
@@ -57,9 +62,9 @@
           <h5>Settings</h5>
           </a>
             <ul class="list-unstyled collapse in" id="userMenu">
-                <li class="active"> <a href="./admin.jsp"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+                <li class="active"> <a href=<%=path+".jsp"%>><i class="glyphicon glyphicon-home"></i> Home</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> Messages <span class="badge badge-info">4</span></a></li>
-                <li><a href="./adminProfile.jsp"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
+                <li><a href=<%=path+"Profile.jsp"%>><i class="glyphicon glyphicon-user"></i> Profile</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Management</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-flag"></i> Reports</a></li>
                 <li><a href="../logout"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
@@ -73,7 +78,7 @@
     <div class="col-sm-9">
       	
       <!-- column 2 -->	
-      <a href="./admin.jsp"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>  
+      <a href=<%=path+".jsp"%>><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>  
       
       	<hr>
       
@@ -112,6 +117,7 @@
 			      </div>
 			</div><!--/col-span-6-->      
   	</div><!--/col-span-9-->
+</div>
 </div>
 </div>
 <!-- /Main -->
