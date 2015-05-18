@@ -102,7 +102,7 @@
       <a href=<%=path+".jsp"%>><strong><i class="glyphicon glyphicon-dashboard"></i> Employee Index(<%=name %>)</strong></a>  
       
       	<hr>
-      	<form>
+      	<form action="123" method="post">
 		<div class="row">
             <!-- center left-->	
          	<div class="col-md-11">

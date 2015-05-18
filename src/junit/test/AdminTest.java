@@ -21,6 +21,7 @@ import company.model.util.JPAResourceBean;
 import company.model.util.ManagedAdminBean;
 import company.model.util.ManagedEmployeeBean;
 import company.model.util.ManagedManagerBean;
+import company.model.util.ManagedSigninBean;
 
 public class AdminTest {
 	
@@ -144,34 +145,6 @@ public class AdminTest {
 		ManagedEmployeeBean.removeById(2);
 	}
 	
-	
-	//SignIn functions
-	@Test
-	public void addSignIn() {
-		EntityManagerFactory factory=Persistence.createEntityManagerFactory("company");
-		EntityManager em=factory.createEntityManager();
-		em.getTransaction().begin();
-		Query query=em.createQuery("select o from Employee o where o.employeeId=?1");
-		query.setParameter(1, 888888888);
-		Employee employee=(Employee)query.getSingleResult();
-		
-		Signin signin1 = new Signin();
-		Date date = new Date();
-		DateFormat df = DateFormat.getDateTimeInstance();		
-		signin1.setTime(df.format(date));
-		signin1.setStatus("YES");
-		signin1.setEmployee(employee);
-		
-		employee.getSignins().add(signin1);
-		
-		em.merge(signin1);
-		em.merge(employee);
-		em.getTransaction().commit();
-		em.close();
-		factory.close();
-	}
-	
-	
 	@Test
 	public void searchEmployee(){
 		EntityManager em = JPAResourceBean.getEMF().createEntityManager();
@@ -181,4 +154,29 @@ public class AdminTest {
 		em.close();
 		
 	}
+	//SignIn functions
+	@Test
+	public void addSignIn() {
+		Employee employee = ManagedEmployeeBean.getById(2);
+		
+		Signin signin1 = new Signin();
+		Date date = new Date();
+		DateFormat df1 = DateFormat.getDateTimeInstance();	
+		DateFormat df2 = DateFormat.getDateInstance();
+		signin1.setTime(df1.format(date));
+		signin1.setDate(df2.format(date));
+		signin1.setStatus("YES");
+		signin1.setEmployee(employee);
+		
+		ManagedSigninBean.createNewSignin(2, signin1);
+	}
+	
+	@Test
+	public void searchSignIn() {
+		Date date = new Date();
+		DateFormat df = DateFormat.getDateInstance();
+		Signin signin = ManagedSigninBean.getByIdDate(1, df.format(date),"NO");
+		System.out.print(signin.getTime());
+	}
+	
 }

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="company.model.*,company.model.util.*"%>
+    pageEncoding="UTF-8" import="company.model.*,company.model.util.*,java.util.*,java.text.DateFormat"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -84,7 +84,27 @@
 		<div class="row">
             <!-- center left-->	
          	<div class="col-md-6">
-			  <div class="well">Inbox Messages <span class="badge pull-right">3</span></div>
+         	<form action="../signout" method="post">
+			  <div class="well">Sign In Status: 
+			  <%	Date date = new Date();
+				DateFormat df = DateFormat.getDateInstance();
+				Signin signin=null;
+				String status = "NULL";
+				try{
+					signin = ManagedSigninBean.getByIdDate(Integer.parseInt(session.getAttribute("user").toString()), df.format(date),"YES");
+					try{
+						signin = ManagedSigninBean.getByIdDate(Integer.parseInt(session.getAttribute("user").toString()), df.format(date),"NO");
+						status = "&nbsp;&nbsp;You Have Signed Out!!";
+					}catch(Exception e){
+						status = "&nbsp;&nbsp;<button type='submit' class='btn btn-primary'>You Have Signed In!!</button>";
+					}
+				}catch(Exception e){
+					status = "&nbsp;&nbsp;<button type='submit' class='btn btn-primary'>Please Sign In!!</button>";
+				}
+			  %>
+			  <%=status %>
+			  </div>
+			  </form>
               <hr>
               <div class="panel panel-default">
                   <div class="panel-heading"><h4>Notices</h4></div>

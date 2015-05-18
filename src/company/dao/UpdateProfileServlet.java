@@ -18,13 +18,13 @@ import company.model.util.ManagedManagerBean;
  * Servlet implementation class UpdateProfile
  */
 @WebServlet("/updateProfile")
-public class UpdateProfile extends HttpServlet {
+public class UpdateProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateProfile() {
+    public UpdateProfileServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 
 import company.model.Employee;
 import company.model.Manager;
+import company.model.Signin;
 
 public class ManagedEmployeeBean {
 	public static void  createNewEmployee(Integer managerId, Employee employee){
@@ -49,7 +50,6 @@ public class ManagedEmployeeBean {
 	        em.close();
 	    }
 	}
-	
 	public static void updateFull(Integer employeeId, String name,Integer birthday, String email, String gender, String phone){
 	    EntityManager em = JPAResourceBean.getEMF().createEntityManager();
 	    try{
@@ -60,6 +60,18 @@ public class ManagedEmployeeBean {
 	        employee.setEmail(email);
 	        employee.setGender(gender);
 	        employee.setPhone(phone);
+	        em.getTransaction().commit();
+	    }finally{
+	        em.close();
+	    }
+	}
+	
+	public static void addSignin(Integer employeeId, Signin signin){
+	    EntityManager em = JPAResourceBean.getEMF().createEntityManager();
+	    try{
+	        em.getTransaction().begin();
+	        Employee employee = em.find(Employee.class, employeeId);
+	        employee.getSignins().add(signin);
 	        em.getTransaction().commit();
 	    }finally{
 	        em.close();

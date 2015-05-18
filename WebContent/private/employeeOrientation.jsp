@@ -102,7 +102,7 @@
       <a href=<%=path+".jsp"%>><strong><i class="glyphicon glyphicon-dashboard"></i> Employee Index(<%=name %>)</strong></a>  
       
       	<hr>
-      	<form action="../orientation" method="post">
+      	<form action="../changeStatus" method="post">
 		<div class="row">
             <!-- center left-->	
          	<div class="col-md-11">
@@ -128,12 +128,12 @@
 				for(i=(pageNum-1)*pageSize;i<pageSize*pageNum && i<manager.getEmployees().size();i++) { 
 				%>
 				<tr>
-					 <td><input type="radio" name="employees"  value=<%=employees.get(i).getEmployeeId()%>><%=employees.get(i).getEmployeeId()%></td>
+					 <td>&nbsp;<%=employees.get(i).getEmployeeId()%></td>
 					<td><%=employees.get(i).getName() %></td>
 					<td><%=employees.get(i).getEmail() %></td>
 					<td><%=ManagedEmployeeBean.getManagerName(employees.get(i).getEmployeeId()) %></td>
 					<td>
-					<button type="submit" class="btn btn-primary"><%=employees.get(i).getStatus() %></button>
+					<a href="../changeStatus?employeeId=<%=employees.get(i).getEmployeeId() %>"><%=employees.get(i).getStatus() %></a>
 					</td>
 				</tr>
 				<% }

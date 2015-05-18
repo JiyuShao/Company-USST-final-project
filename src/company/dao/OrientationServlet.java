@@ -1,9 +1,8 @@
-package company.session;
+package company.dao;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import company.model.Employee;
 import company.model.Manager;
-import company.model.util.JPAResourceBean;
 import company.model.util.ManagedEmployeeBean;
 import company.model.util.ManagedManagerBean;
 
@@ -20,13 +18,13 @@ import company.model.util.ManagedManagerBean;
  * Servlet implementation class Orientation
  */
 @WebServlet("/orientation")
-public class Orientation extends HttpServlet {
+public class OrientationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Orientation() {
+    public OrientationServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,31 +41,6 @@ public class Orientation extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-//		String employeeId = request.getParameter("employees");
-//		EntityManager em = JPAResourceBean.getEMF().createEntityManager();
-//		try{
-//	        em.getTransaction().begin();
-//	        Employee employee = em.find(Employee.class, employeeId);
-//	        if(employee!=null){
-//				if(employee.getStatus().equals("YES")){
-//					employee.setStatus("NO");
-//				}else if(employee.getStatus().equals("NO")){
-//					employee.setStatus("YES");
-//				}else{
-//					employee.setStatus("YES");
-//				}
-//			} else {
-//				PrintWriter out = response.getWriter();
-//				out.print("<script>alert('Login Error!!');</script>");
-//			}
-//	        em.getTransaction().commit();
-//	    }finally{
-//	        em.close();
-//	    }
-//		PrintWriter out = response.getWriter();
-//		out.print("<script>window.location.href='"+request.getContextPath()+"/private/employeeOrientation.jsp';</script>");
-	
-	
 		String managerId = request.getParameter("managerId");
 		String userName = request.getParameter("name");
 		String email = request.getParameter("email");

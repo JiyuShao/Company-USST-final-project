@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.OrderBy;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -24,7 +25,7 @@ public class Signin implements java.io.Serializable {
 
 	private Integer signinId;
 	private Employee employee;
-	private String name;
+	private String date;
 	private String time;
 	private String status;
 
@@ -37,9 +38,9 @@ public class Signin implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public Signin(Employee employee, String name, String time, String status) {
+	public Signin(Employee employee, String date, String time, String status) {
 		this.employee = employee;
-		this.name = name;
+		this.date = date;
 		this.time = time;
 		this.status = status;
 	}
@@ -65,13 +66,14 @@ public class Signin implements java.io.Serializable {
 		this.employee = employee;
 	}
 
-	@Column(name = "NAME", length = 30)
-	public String getName() {
-		return this.name;
+	@Column(name = "DATE", length = 30)
+	@OrderBy
+	public String getDate() {
+		return this.date;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	@Column(name = "TIME", nullable = false, length = 100)
