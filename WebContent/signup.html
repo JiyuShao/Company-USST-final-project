@@ -78,44 +78,45 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <form name="signup" id="signupForm" novalidate>
+                    <form name="signup" id="signupForm" action="orientation" method="post" novalidate>
                         <div class="row">
                         <div class="col-md-3">
                         </div>
                             <div class="col-md-3">
                             	<div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Your Name *" id="name" required data-validation-required-message="Please enter your Name.">
+                                    <input type="text" class="form-control" placeholder="Your Name *" id="name" name="name" required data-validation-required-message="Please enter your Name.">
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <p class="help-block text-danger"></p>
                                 
                                 <div class="form-group">
-                                    <input type="email" class="form-control" placeholder="Your Email *" id="email" required data-validation-required-message="Please enter your Email.">
+                                    <input type="email" class="form-control" placeholder="Your Email *" id="email" name="email" required data-validation-required-message="Please enter your Email.">
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <p class="help-block text-danger"></p>
                                 
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Your Phone *" id="phone" required data-validation-required-message="Please enter your Phone.">
+                                    <input type="password" class="form-control" placeholder="Your password *" id="password" name="password" required data-validation-required-message="Please enter your password.">
                                     <p class="help-block text-danger"></p>
                                 </div>
+                                
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="col-md-3">                                
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Your Site ID *" id="siteID" required data-validation-required-message="Please enter your SiteID.">
+                                    <input type="text" class="form-control" placeholder="Your Manager ID *" id="managerId" name="managerId" required data-validation-required-message="Please enter your ManagerID.">
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <p class="help-block text-danger"></p>
                                 
                                 <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Your password *" id="password" required data-validation-required-message="Please enter your password.">
+                                    <input type="text" class="form-control" placeholder="Your Phone *" id="phone" name="phone" required data-validation-required-message="Please enter your Phone.">
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <p class="help-block text-danger"></p>
                                 
                                 <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Your password *" id="password2" required data-validation-required-message="Please reenter your password.">
+                                    <input type="password" class="form-control" placeholder="Confirmed password *" id="password2" name="password2" required data-validation-required-message="Please confirm your password.">
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <p class="help-block text-danger"></p>

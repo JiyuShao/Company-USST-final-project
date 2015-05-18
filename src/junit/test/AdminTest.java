@@ -94,9 +94,9 @@ public class AdminTest {
 		Admin admin = ManagedAdminBean.getById(1);
 		
 		Manager manager1 = new Manager();
-		manager1.setName("meng");
+		manager1.setName("Tian");
 		manager1.setStatus("YES");
-		manager1.setPassword("zmf1220");
+		manager1.setPassword("123456");
 		manager1.setAdmin(admin);
 		
 		ManagedManagerBean.createNewManager(1, manager1);
@@ -125,7 +125,7 @@ public class AdminTest {
 		Manager manager = ManagedManagerBean.getById(1);
 		
 		Employee employee1 = new Employee();
-		employee1.setName("Hehe");
+		employee1.setName("Lei");
 		employee1.setPassword("123456");
 		employee1.setStatus("NULL");
 		employee1.setManager(manager);		

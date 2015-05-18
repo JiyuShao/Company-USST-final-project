@@ -46,22 +46,26 @@ public class LoginServlet extends HttpServlet {
 		
 		String password="";
 		String path="";
-				
+		String status = "";		
 		if(accountType.equals("Admin")){
 			Admin admin = ManagedAdminBean.getById(Integer.parseInt(user));
 			password = admin.getPassword();
 			path = "/private/admin.jsp";
+			status = "YES";
 		}else if(accountType.equals("Manager")){
 			Manager manager = ManagedManagerBean.getById(Integer.parseInt(user));
 			password = manager.getPassword();
 			path = "/private/manager.jsp";
+			status = manager.getStatus();
+			
 		}else if(accountType.equals("Employee")){
 			Employee employee = ManagedEmployeeBean.getById(Integer.parseInt(user));
 			password = employee.getPassword();
 			path = "/private/employee.jsp";
+			status = employee.getStatus();
 		}
 		
-		if(!user.isEmpty() && password.equals(pwd)) {
+		if(!user.isEmpty() && password.equals(pwd) && status.equals("YES")) {
 			
 			HttpSession session = request.getSession(true);
 			session.setAttribute("user", user);

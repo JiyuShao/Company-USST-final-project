@@ -18,7 +18,7 @@
 		  String title = "";
 		  Integer pageNum = 1;
 		  Integer totalPages = 0;
-		  Integer pageSize = 6;
+		  Integer pageSize = 3;
 		  try{
 			  pageNum =Integer.parseInt(request.getParameter("pageNum"));
 		  }catch(Exception e){}
@@ -102,7 +102,7 @@
       <a href=<%=path+".jsp"%>><strong><i class="glyphicon glyphicon-dashboard"></i> Employee Index(<%=name %>)</strong></a>  
       
       	<hr>
-      	<form>
+      	<form action="../orientation" method="post">
 		<div class="row">
             <!-- center left-->	
          	<div class="col-md-11">
@@ -132,7 +132,9 @@
 					<td><%=employees.get(i).getName() %></td>
 					<td><%=employees.get(i).getEmail() %></td>
 					<td><%=ManagedEmployeeBean.getManagerName(employees.get(i).getEmployeeId()) %></td>
-					<td><%=employees.get(i).getStatus() %></td>
+					<td>
+					<button type="submit" class="btn btn-primary"><%=employees.get(i).getStatus() %></button>
+					</td>
 				</tr>
 				<% }
 			} else { %>
@@ -153,7 +155,7 @@
 					      </a>
 					    </li>
 					    <%for(int i=1;i<=totalPages;i++){%>
-					    	<li><a href=<%="./employeeIndex.jsp?pageNum="+i%>><%=i%></a></li>
+					    	<li><a href=<%="./employeeOrientation.jsp?pageNum="+i%>><%=i%></a></li>
 					    <% }%>
 					    <li>
 					      <a href="#" aria-label="Next">
@@ -162,7 +164,6 @@
 					    </li>
 					  </ul>
 					</nav>				
-			<button type="submit" class="btn btn-primary">Update</button>
 			</div>
 		</div>
 		</form>

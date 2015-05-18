@@ -100,10 +100,10 @@
       		<%} else if(title.equals("Manager")){%>
       			<a href="./employeeIndex.jsp"><button class="btn btn-primary" type="button">Employee Index</button></a>
       			<br><br><br>
+      			
+      			<a href="./employeeOrientation.jsp"><button class="btn btn-primary" type="button">Orientation</button></a>
+				<br><br><br>
       		<%} %>
-      		
-      		<a href="./orientation.jsp"><button class="btn btn-primary" type="button">Orientation</button></a>
-			<br><br><br>
       		<a href="./signUp.jsp"><button class="btn btn-primary" type="button">Sign Up</button></a>
       		<br><br><br>
 	 </div>
