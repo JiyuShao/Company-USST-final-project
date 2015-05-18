@@ -65,7 +65,6 @@
                 <li class="active"> <a href=<%=path+".jsp"%>><i class="glyphicon glyphicon-home"></i> Home</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> Messages <span class="badge badge-info">4</span></a></li>
                 <li><a href=<%=path+"Profile.jsp"%>><i class="glyphicon glyphicon-user"></i> Profile</a></li>
-                <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Management</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-flag"></i> Reports</a></li>
                 <li><a href="../logout"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
             </ul>

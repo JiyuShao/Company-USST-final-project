@@ -1,7 +1,9 @@
 package junit.test;
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.text.DateFormat;
 
 import javax.persistence.EntityManager;
@@ -123,7 +125,7 @@ public class AdminTest {
 		Manager manager = ManagedManagerBean.getById(1);
 		
 		Employee employee1 = new Employee();
-		employee1.setName("Huang");
+		employee1.setName("Hehe");
 		employee1.setPassword("123456");
 		employee1.setStatus("NULL");
 		employee1.setManager(manager);		
@@ -174,9 +176,8 @@ public class AdminTest {
 	public void searchEmployee(){
 		EntityManager em = JPAResourceBean.getEMF().createEntityManager();
 		Manager manager = em.find(Manager.class, 1);
-		for(Employee employee: manager.getEmployees()) {
-			System.out.print(employee.getName());
-		}
+		List<Employee> employees =new ArrayList<Employee>(manager.getEmployees());
+		System.out.print(employees.get(1).getName());
 		em.close();
 		
 	}

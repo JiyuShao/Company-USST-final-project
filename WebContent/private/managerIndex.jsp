@@ -24,21 +24,14 @@
 		  }catch(Exception e){}
 		  
 		  
-		  Manager manager = null;
+		  Admin admin = null;
           if(session.getAttribute("type").equals("Admin")){
-        	  Admin admin = ManagedAdminBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
+        	  admin = ManagedAdminBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
         	  if(admin != null){
         	  path = "./admin";
         	  name=admin.getName();
         	  title="Administriation";
         	  }
-          } else if(session.getAttribute("type").equals("Manager")){
-          	manager = ManagedManagerBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
-          	if(manager != null){
-          		path = "./manager";
-          		name = manager.getName();
-          		title = "Manager";
-          	}
           } else { 
   			out.print("<script>alert('No permission!');window.location.href='"+request.getContextPath()+"/login.html';</script>");
           } %>
@@ -99,7 +92,7 @@
     <div class="col-sm-9">
       	
       <!-- column 2 -->	
-      <a href=<%=path+".jsp"%>><strong><i class="glyphicon glyphicon-dashboard"></i> Employee Index(<%=name %>)</strong></a>  
+      <a href=<%=path+".jsp"%>><strong><i class="glyphicon glyphicon-dashboard"></i> Manager Index(<%=name %>)</strong></a>  
       
       	<hr>
       	<form>
@@ -112,7 +105,7 @@
 					        <th class="col-md-2">ID</th>
 					        <th class="col-md-2">Name</th>
 					        <th class="col-md-3">Email</th>
-					        <th class="col-md-3">Manager</th>
+					        <th class="col-md-3">Admin</th>
 					        <th class="col-md-2">Status</th>
 					        
 					    </tr>
@@ -120,19 +113,19 @@
 				    <tbody>
 			<% 
 			EntityManager em = JPAResourceBean.getEMF().createEntityManager();
-			manager = em.find(Manager.class, Integer.parseInt(session.getAttribute("user").toString()));
-			if(manager != null){
-				List<Employee> employees = new ArrayList<Employee>(manager.getEmployees());
+			admin = em.find(Admin.class, Integer.parseInt(session.getAttribute("user").toString()));
+			if(admin != null){
+				List<Manager> managers = new ArrayList<Manager>(admin.getManagers());
 				Integer i=0;
-				totalPages = manager.getEmployees().size()/pageSize+1;
-				for(i=(pageNum-1)*pageSize;i<pageSize*pageNum && i<manager.getEmployees().size();i++) { 
+				totalPages = admin.getManagers().size()/pageSize+1;
+				for(i=(pageNum-1)*pageSize;i<pageSize*pageNum && i<admin.getManagers().size();i++) { 
 				%>
 				<tr>
-					 <td><input type="radio" name="employees"  value=<%=employees.get(i).getEmployeeId()%>><%=employees.get(i).getEmployeeId()%></td>
-					<td><%=employees.get(i).getName() %></td>
-					<td><%=employees.get(i).getEmail() %></td>
-					<td><%=ManagedEmployeeBean.getManagerName(employees.get(i).getEmployeeId()) %></td>
-					<td><%=employees.get(i).getStatus() %></td>
+					 <td><input type="radio" name="employees"  value=<%=managers.get(i).getManagerId()%>><%=managers.get(i).getManagerId()%></td>
+					<td><%=managers.get(i).getName() %></td>
+					<td><%=managers.get(i).getEmail() %></td>
+					<td><%=ManagedManagerBean.getAdminName(managers.get(i).getManagerId()) %></td>
+					<td><%=managers.get(i).getStatus() %></td>
 				</tr>
 				<% }
 			} else { %>
@@ -153,7 +146,7 @@
 					      </a>
 					    </li>
 					    <%for(int i=1;i<=totalPages;i++){%>
-					    	<li><a href=<%="./employeeIndex.jsp?pageNum="+i%>><%=i%></a></li>
+					    	<li><a href=<%="./managerIndex.jsp?pageNum="+i%>><%=i%></a></li>
 					    <% }%>
 					    <li>
 					      <a href="#" aria-label="Next">
