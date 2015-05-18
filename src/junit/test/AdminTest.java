@@ -179,4 +179,12 @@ public class AdminTest {
 		System.out.print(signin.getTime());
 	}
 	
+	@Test
+	public void searchTodaySignIn() {
+		Date date = new Date();
+		DateFormat df = DateFormat.getDateInstance();
+		List<Signin> signins = ManagedSigninBean.getTodayList(1, df.format(date));
+		System.out.print(signins.get(0).getDate());
+	}
+	
 }

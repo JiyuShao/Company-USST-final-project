@@ -1,5 +1,7 @@
 package company.model.util;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -26,5 +28,25 @@ public class ManagedSigninBean {
 	    query.setParameter(2, date);
 	    query.setParameter(3, status);
 	    return (Signin) query.getSingleResult();
+	}
+	
+	public static String getEmployeeName(Integer signinId){
+	    EntityManager em = JPAResourceBean.getEMF().createEntityManager();
+	    try{
+	        return em.find(Signin.class, signinId).getEmployee().getName();
+	    }finally{
+	        em.close();
+	    }
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<Signin> getTodayList(Integer managerId, String date){
+	    EntityManager em = JPAResourceBean.getEMF().createEntityManager();
+	    em.getTransaction().begin();
+	    Query query=em.createQuery("select o from Signin o join o.employee.manager m where m.managerId=?1 and o.date=?2");
+	    query.setParameter(1, managerId);
+	    query.setParameter(2, date);
+	    
+	    return (List<Signin>) query.getResultList();
 	}
 }
