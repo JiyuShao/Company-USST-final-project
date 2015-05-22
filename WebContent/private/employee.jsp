@@ -107,12 +107,19 @@
 			  </form>
               <hr>
               <div class="panel panel-default">
-                  <div class="panel-heading"><h4>Notices</h4></div>
-                  <div class="panel-body">
                     
-                  This is a dashboard-style layout that uses Bootstrap 3. You can use this template as a starting point to create something more unique.
+                  <div class="panel-heading"><h4>Notices(<%=df.format(date) %>)</h4></div>
+                  <div class="panel-body">
+                  	<%
+                    try{
+                    	Notice notice = ManagedNoticeBean.getByDate(df.format(date));
+                    	%><%=notice.getContent() %><%
+                    }catch(Exception e){
+                    	%><%="0 Notice Today :)" %><%
+                    }
+                    
+                    %>
                   <br><br>
-                  Visit the Bootstrap Playground at <a href="http://bootply.com">Bootply</a> to tweak this layout or discover more useful code snippets.
                   </div>
               	</div>          
               

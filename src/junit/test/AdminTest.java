@@ -16,11 +16,13 @@ import org.junit.Test;
 import company.model.Admin;
 import company.model.Employee;
 import company.model.Manager;
+import company.model.Notice;
 import company.model.Signin;
 import company.model.util.JPAResourceBean;
 import company.model.util.ManagedAdminBean;
 import company.model.util.ManagedEmployeeBean;
 import company.model.util.ManagedManagerBean;
+import company.model.util.ManagedNoticeBean;
 import company.model.util.ManagedSigninBean;
 
 public class AdminTest {
@@ -185,6 +187,28 @@ public class AdminTest {
 		DateFormat df = DateFormat.getDateInstance();
 		List<Signin> signins = ManagedSigninBean.getTodayList(1, df.format(date));
 		System.out.print(signins.get(0).getDate());
+	}
+	
+	//Notice Functions
+	@Test
+	public void addNotice() {
+		Notice notice = new Notice();
+		Date date = new Date();
+		DateFormat df = DateFormat.getDateInstance();
+		
+		notice.setTitle("Notice3");
+		notice.setContent("Content3");
+		notice.setDate(df.format(date));
+		ManagedNoticeBean.createNewNotice(notice);
+	}
+	
+	@Test
+	public void getNoticeByDate() {
+		Date date = new Date();
+		DateFormat df = DateFormat.getDateInstance();
+		
+		Notice notice = ManagedNoticeBean.getByDate(df.format(date));
+		System.out.print(notice.getTitle());
 	}
 	
 }
