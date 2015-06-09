@@ -57,8 +57,8 @@ public class AdminTest {
 	@Test
 	public void addAdmin() {
 		Admin admin = new Admin();
-		admin.setName("sjy");
-		admin.setPassword("sjy1125");
+		admin.setName("huang");
+		admin.setPassword("123456");
 		ManagedAdminBean.createNewAdmin(admin);
 	}
 	

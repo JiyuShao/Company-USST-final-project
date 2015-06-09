@@ -94,7 +94,7 @@
 					   		</div>
 					  	</div>
 					  	<div class="form-group">
-					    	<label for="adminName" class="col-sm-2 control-label">AdminName</label>
+					    	<label for="adminName" class="col-sm-2 control-label">Manager</label>
 					    	<div class="col-sm-10">
 					      	<input type="text" class="form-control" name="adminName" placeholder="AdminName" value="<%=ManagedEmployeeBean.getManagerName(Integer.parseInt(session.getAttribute("user").toString())) %>" disabled="true">
 					   		</div>

@@ -95,6 +95,12 @@
       <a href=<%=path+".jsp"%>><strong><i class="glyphicon glyphicon-dashboard"></i> Employee Sign In(<%=name %>)</strong></a>  
       
       	<hr>
+      	<%
+	      	Date date = new Date();
+			DateFormat df = DateFormat.getDateInstance();
+      	%>
+      	<input id="signin" type="date"/>
+      	
       	<form action="123" method="post">
 		<div class="row">
             <!-- center left-->	
@@ -111,8 +117,6 @@
 				    </thead>
 				    <tbody>
 			<% 
-			Date date = new Date();
-			DateFormat df = DateFormat.getDateInstance();
 			try{
 				List<Signin> signins = ManagedSigninBean.getTodayList(Integer.parseInt(session.getAttribute("user").toString()), df.format(date));
 				totalPages = signins.size()/pageSize+1;
