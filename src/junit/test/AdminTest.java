@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -31,8 +32,22 @@ public class AdminTest {
 	public void getDate(){
 		Date date = new Date();
 		DateFormat df = DateFormat.getDateTimeInstance();
+		DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+		
 		System.out.print(df.format(date)+"\n");
+		System.out.print(df2.format(date).toString());
 	}
+	
+	@Test
+	public void getDate2(){
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String date = df.format(new Date());
+		
+		Notice notice = ManagedNoticeBean.getByDate("20150610");
+		System.out.print(notice.getTitle());
+		System.out.print(date+"\n");
+	}
+	
 	
 	@Test
 	public void initial(){

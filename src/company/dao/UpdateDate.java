@@ -1,10 +1,6 @@
 package company.dao;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,20 +8,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import company.model.Notice;
-import company.model.util.ManagedNoticeBean;
-
 /**
- * Servlet implementation class AddNotice
+ * Servlet implementation class UpdateDate
  */
-@WebServlet("/addNotice")
-public class AddNotice extends HttpServlet {
+@WebServlet("/updateDate")
+public class UpdateDate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddNotice() {
+    public UpdateDate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,22 +35,9 @@ public class AddNotice extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String content = request.getParameter("content");
-		PrintWriter out = response.getWriter();
-		try {
-			Notice notice = new Notice();
-			String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-			notice.setTitle("Notice");
-			notice.setContent(content);
-			notice.setDate(date);
-			ManagedNoticeBean.createNewNotice(notice);
-			out.print("<script>alert('Add Notice Succeed!!')</script>");
-		} catch (Exception e) {
-			// TODO: handle exception
-			out.print("<script>alert('Add Notice Failed!!')</script>");
-		}
-		out.print("<script>window.location.href='" + request.getContextPath()
-				+ "/private/addNotice.jsp';</script>");
+		String date =request.getParameter("date");
+		response.sendRedirect(request.getContextPath() + "/private/employeeSignin.jsp?date="+date);
+		
 	}
 
 }

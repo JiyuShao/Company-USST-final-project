@@ -2,6 +2,7 @@ package company.dao;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -45,20 +46,19 @@ public class Signout extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
 		String employeeId = (String) session.getAttribute("user");
-		Date date = new Date();
-		DateFormat df1 = DateFormat.getDateInstance();
-		DateFormat df2 = DateFormat.getDateTimeInstance();	
+		String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		DateFormat df = DateFormat.getDateTimeInstance();	
 		
 		Signin signin=null;
 		try{
-			signin = ManagedSigninBean.getByIdDate(Integer.parseInt(employeeId), df1.format(date),"YES");
+			signin = ManagedSigninBean.getByIdDate(Integer.parseInt(employeeId), date,"YES");
 			try{
-				signin = ManagedSigninBean.getByIdDate(Integer.parseInt(employeeId), df1.format(date),"NO");
+				signin = ManagedSigninBean.getByIdDate(Integer.parseInt(employeeId), date,"NO");
 			}catch(Exception e){
 				Employee employee = ManagedEmployeeBean.getById(Integer.parseInt(employeeId));
 				Signin signin1 = new Signin();
-				signin1.setDate(df1.format(date));
-				signin1.setTime(df2.format(date));
+				signin1.setDate(date);
+				signin1.setTime(df.format(new Date()));
 				signin1.setStatus("NO");
 				signin1.setEmployee(employee);
 				ManagedSigninBean.createNewSignin(Integer.parseInt(employeeId), signin1);
@@ -66,8 +66,8 @@ public class Signout extends HttpServlet {
 		}catch(Exception e){
 			Employee employee = ManagedEmployeeBean.getById(Integer.parseInt(employeeId));
 			Signin signin1 = new Signin();
-			signin1.setDate(df1.format(date));
-			signin1.setTime(df2.format(date));
+			signin1.setDate(date);
+			signin1.setTime(df.format(new Date()));
 			signin1.setStatus("YES");
 			signin1.setEmployee(employee);
 			ManagedSigninBean.createNewSignin(Integer.parseInt(employeeId), signin1);

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="company.model.*,company.model.util.*,java.util.*,java.text.DateFormat"%>
+    pageEncoding="UTF-8" import="company.model.*,company.model.util.*,java.util.*,java.text.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,8 +11,7 @@
 <% 		  String path = "";
 		  String name = "";
 		  String title = "";
-		  Date date = new Date();
-		  DateFormat df = DateFormat.getDateInstance();
+		  String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
           if(session.getAttribute("type").equals("Manager")){
           	Manager manager = ManagedManagerBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
           	if(manager != null){
@@ -91,11 +90,11 @@
               <hr>
               <div class="panel panel-default">
                     
-                  <div class="panel-heading"><h4>Notices(<%=df.format(date) %>)</h4></div>
+                  <div class="panel-heading"><h4>Notices(<%=date%>)</h4></div>
                   <div class="panel-body">
                   	<%
                     try{
-                    	Notice notice = ManagedNoticeBean.getByDate(df.format(date));
+                    	Notice notice = ManagedNoticeBean.getByDate(date);
                     	%><%=notice.getContent() %><%
                     }catch(Exception e){
                     	%><%="0 Notice Today :)" %><%

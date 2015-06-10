@@ -19,6 +19,8 @@
 		  Integer pageNum = 1;
 		  Integer totalPages = 0;
 		  Integer pageSize = 6;
+		  String date = request.getParameter("date");
+		  
 		  try{
 			  pageNum =Integer.parseInt(request.getParameter("pageNum"));
 		  }catch(Exception e){}
@@ -96,10 +98,15 @@
       
       	<hr>
       	<%
-	      	Date date = new Date();
-			DateFormat df = DateFormat.getDateInstance();
+      		if(date==""||date==null){
+      			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+      			date = df.format(new Date());
+      		}
       	%>
-      	<input id="signin" type="date"/>
+      	<form action="../updateDate" method="post">
+      		<input name="date" type="date" value=<%=date%>>
+      		<input name="submit" class="btn btn-default" type="submit" value="Update" >
+      	</form>
       	
       	<form action="123" method="post">
 		<div class="row">
@@ -118,7 +125,7 @@
 				    <tbody>
 			<% 
 			try{
-				List<Signin> signins = ManagedSigninBean.getTodayList(Integer.parseInt(session.getAttribute("user").toString()), df.format(date));
+				List<Signin> signins = ManagedSigninBean.getTodayList(Integer.parseInt(session.getAttribute("user").toString()), date);
 				totalPages = signins.size()/pageSize+1;
 				Integer i = 0;
 				for(i=(pageNum-1)*pageSize;i<pageSize*pageNum && i<signins.size();i++) { 
@@ -158,7 +165,6 @@
 					    </li>
 					  </ul>
 					</nav>				
-			<button type="submit" class="btn btn-primary">Update</button>
 			</div>
 		</div>
 		</form>
