@@ -12,16 +12,28 @@
 		  String name = "";
 		  String title = "";
 		  String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-          if(session.getAttribute("type").equals("Admin")){
+		  if(session.getAttribute("type").equals("Admin")){
         	  Admin admin = ManagedAdminBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
         	  if(admin != null){
         	  path = "./admin";
         	  name=admin.getName();
         	  title="Administriation";
         	  }
-          } else { 
-  			out.print("<script>alert('No permission!');window.location.href='"+request.getContextPath()+"/login.html';</script>");
-          } %>
+          } else if(session.getAttribute("type").equals("Manager")){
+        	  Manager manager = ManagedManagerBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
+              if(manager != null){
+            	path = "./manager";
+            	name = manager.getName();
+            	title = "Manager";
+              }
+            }else if(session.getAttribute("type").equals("Employee")){
+              Employee employee = ManagedEmployeeBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
+            	  if(employee != null){
+            	  path = "./employee";
+            	  name=employee.getName();
+            	  title="Employee";
+            	  }
+              } %>
 <title><%=title%></title>
 </head>
 <body>
@@ -66,11 +78,17 @@
                 <li class="active"> <a href=<%=path+".jsp"%>><i class="glyphicon glyphicon-home"></i> Home</a></li>
                 <li><a href="./messageIndex.jsp"><i class="glyphicon glyphicon-envelope"></i> Messages <span class="badge badge-info">
 				<% 
-			  		List<Message> messages = ManagedMessageBean.getByToTypeIdStatus(session.getAttribute("type").toString(),
+				List<Message> messages=null;
+				Message message=null; 
+				try{
+			  		messages = ManagedMessageBean.getByToTypeIdStatus(session.getAttribute("type").toString(),
 			  				Integer.parseInt(session.getAttribute("user").toString()),"YES");
+					String messageId =request.getParameter("messageId");
+					message = ManagedMessageBean.getMessageById(Integer.parseInt(messageId));
+				}catch(Exception e){}
 			  	%>
 			  	<%=messages.size()%>
-				</span></a></li>
+			  	</span></a></li>
                 <li><a href=<%=path+"Profile.jsp"%>><i class="glyphicon glyphicon-user"></i> Profile</a></li>
                 <li><a href="./management.jsp"><i class="glyphicon glyphicon-cog"></i> Management</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-flag"></i> Reports</a></li>
@@ -82,44 +100,61 @@
       <hr>
       
   	</div><!-- /col-3 -->
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
     <div class="col-sm-9">
       	
       <!-- column 2 -->	
-      <a href=<%=path+".jsp"%>><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>  
+      <a href=<%=path+".jsp"%>><strong><i class="glyphicon glyphicon-dashboard"></i> Message</strong></a>  
       
       	<hr>
       
 		<div class="row">
             <!-- center left-->	
-         	<div class="col-md-6">
-			  <div class="well">Inbox Messages <span class="badge pull-right">
-			  	<%=messages.size()%>
-			  </span></div>
-              <hr>
+            <div class="col-md-7">
+            	<a href="./messageIndex.jsp"><strong> Message(Message Id:<%=message.getMessageId() %>)</strong></a>  
+			  <br><br>
               <div class="panel panel-default">
                     
-                  <div class="panel-heading"><h4>Notices(<%=date %>)</h4></div>
+                  <div class="panel-heading"><h5>Title: <%=message.getTitle() %> 
+                  <h5>From:<%=message.getFtype() %> <%=message.getFid() %>
+                  &nbsp&nbsp&nbsp&nbsp Date: <%=message.getDate() %></h5>
+                  </div>
                   <div class="panel-body">
-                  	<%
-                    try{
-                    	Notice notice = ManagedNoticeBean.getByDate(date);
-                    	%><%=notice.getContent() %><%
-                    }catch(Exception e){
-                    	%><%="0 Notice Today :)" %><%
-                    }
-                    
-                    %>
+                  	<%=message.getContent()%>
                   <br><br>
                   </div>
-              	</div>         
-              
+              	</div>     
+            </div>
+         	<div class="col-md-7">
+			  <div class="form-group">
+    			<a href="./sendMessage.jsp?rType=<%=message.getFtype()%>&rId=<%=message.getFid()%>"><button class="btn btn-primary" type="button">Reply</button></a>
+  			  </div>  
           	</div><!--/col-->
-        	     
+        	
   	</div><!--/col-span-9-->
-</div>
+</div>  	
 </div>
 </div>
 <!-- /Main -->
+
+
+<!-- 配置文件 -->
+<script type="text/javascript" src="../uEditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="../uEditor/ueditor.all.js"></script>
+<!-- 实例化编辑器 -->
+<script type="text/javascript">
+    var ue = UE.getEditor('container');
+</script>
 
 </body>
 </html>

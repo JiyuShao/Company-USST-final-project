@@ -1,25 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="company.model.*,company.model.util.*,java.util.*,java.text.DateFormat"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+    pageEncoding="UTF-8" import="company.model.*,company.model.util.*,javax.persistence.EntityManager,java.util.*"%>
+    <!DOCTYPE html>  
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Bootply" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="../css/bootstrap.css" rel="stylesheet">
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/styles.css" rel="stylesheet">
+<script type="text/javascript" src="../js/bootstrap.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
+
 <% 		  String path = "";
 		  String name = "";
 		  String title = "";
-		  Date date = new Date();
-		  DateFormat df = DateFormat.getDateInstance();
-		  Integer rId=null;
-		  String rType="Employee";
+		  Integer pageNum = 1;
+		  Integer totalPages = 0;
+		  Integer pageSize = 6;
 		  try{
-			  rId = Integer.parseInt(request.getParameter("rId"));
-			  rType = request.getParameter("rType").toString();
+			  pageNum =Integer.parseInt(request.getParameter("pageNum"));
 		  }catch(Exception e){}
-          if(session.getAttribute("type").equals("Admin")){
+		  
+		  if(session.getAttribute("type").equals("Admin")){
         	  Admin admin = ManagedAdminBean.getById(Integer.parseInt(session.getAttribute("user").toString()));
         	  if(admin != null){
         	  path = "./admin";
@@ -40,7 +44,7 @@
             	  name=employee.getName();
             	  title="Employee";
             	  }
-              }%>
+              } %>
 <title><%=title%></title>
 </head>
 <body>
@@ -85,8 +89,8 @@
                 <li class="active"> <a href=<%=path+".jsp"%>><i class="glyphicon glyphicon-home"></i> Home</a></li>
                 <li><a href="./messageIndex.jsp"><i class="glyphicon glyphicon-envelope"></i> Messages <span class="badge badge-info">
                 <% 
-			  		List<Message> messages = ManagedMessageBean.getByToTypeIdStatus(session.getAttribute("type").toString(),
-			  				Integer.parseInt(session.getAttribute("user").toString()),"YES");
+			  		List<Message> messages = ManagedMessageBean.getByToTypeId(session.getAttribute("type").toString(),
+			  				Integer.parseInt(session.getAttribute("user").toString()));
 			  	%>
 			  	<%=messages.size()%>
                 </span></a></li>
@@ -100,80 +104,80 @@
       <hr>
       
   	</div><!-- /col-3 -->
-    <div class="col-sm-7">
+    <div class="col-sm-9">
       	
       <!-- column 2 -->	
-      <a href=<%=path+".jsp"%>><strong><i class="glyphicon glyphicon-dashboard"></i> Add Message</strong></a>  
+      <a href=<%=path+".jsp"%>><strong><i class="glyphicon glyphicon-dashboard"></i> Employee Index(<%=name %>)</strong></a>  
       
       	<hr>
-      		<!-- 加载编辑器的容器 -->
-      <div class="form-group">
-		<form action="../sendMessage" method="post" class="form-horizontal">  
-			<div class="form-group">
-		    	<label for="user" class="col-sm-2 control-label">Sender Type</label>
-		    	<div class="col-sm-4">
-		      	<input type="text" class="form-control" name="fType" placeholder="fType" value="<%=session.getAttribute("type")%>" disabled="true">
-		      	</div>
-		  	</div>
-		  	
-		  	<div class="form-group">
-		    	<label for="user" class="col-sm-2 control-label">Sender Type</label>
-		    	<div class="col-sm-4">
-		      	<input type="text" class="form-control" name="fId" placeholder="fId" value="<%=session.getAttribute("user").toString()%>" disabled="true">
-		      	</div>
-		  	</div>
-		
-			<div class="form-group">
-		    	<label for="user" class="col-sm-2 control-label">Receiver Type </label>
-		    		<div class="col-sm-6">
-			      	<select id="tType" name="tType">
-					  <option value="Employee" <%if(rType.equals("Employee")) {%><%="selected = 'selected'" %><%}%>>Employee</option>
-					  <option value="Manager" <%if(rType.equals("Manager")) {%><%="selected = 'selected'" %><%}%>>Manager</option>
-					  <option value="Admin" <%if(rType.equals("Admin")) {%><%="selected = 'selected'" %><%}%>>Admin</option>
-				   </select>
-				   </div>
+      	<form action="../messageDetail" method="post">
+		<div class="row">
+            <!-- center left-->	
+         	<div class="col-md-11">
+	         	<table class="table table-striped table-hover" data-height="299" data-sort-name="name" data-sort-order="desc">
+				    <thead>
+					    <tr>
+					        <th class="col-md-2">Message ID</th>
+					        <th class="col-md-2">Sender Type</th>
+					        <th class="col-md-2">Sender ID</th>
+					        <th class="col-md-2">Date</th>
+					        <th class="col-md-2">Title</th>
+					        <th class="col-md-2">Status</th>
+					        
+					    </tr>
+				    </thead>
+				    <tbody>
+			<% 
+			if(messages.size()!=0){
+				Integer i=0;
+				totalPages = messages.size()/pageSize+1;
+				for(i=(pageNum-1)*pageSize;i<pageSize*pageNum && i<messages.size();i++) { 
+				%>
+				<tr>
+					 <td><input type="radio" name="messageId"  value=<%=messages.get(i).getMessageId() %>><%=messages.get(i).getMessageId()%></td>
+					<td><%=messages.get(i).getFtype() %></td>
+					<td><%=messages.get(i).getFid() %></td>
+					<td><%=messages.get(i).getDate() %></td>
+					<td><%=messages.get(i).getTitle()%></td>
+					<td><%=messages.get(i).getStatus()%></td>
+				</tr>
+				<% }
+			} else { %>
+				<tr>
+				     <td><input type="radio" name="messageId" value="null"></td>
+				     <td>null</td>
+				     <td>null</td>
+				     <td>null</td>
+				</tr>
+			<% } %>					    	
+		    		</tbody>	
+				</table>
+					<nav>
+					  <ul class="pagination">
+					    <li>
+					      <a href="#" aria-label="Previous">
+					        <span aria-hidden="true">&laquo;</span>
+					      </a>
+					    </li>
+					    <%for(int i=1;i<=totalPages;i++){%>
+					    	<li><a href=<%="./messageIndex.jsp?pageNum="+i%>><%=i%></a></li>
+					    <% }%>
+					    <li>
+					      <a href="#" aria-label="Next">
+					        <span aria-hidden="true">&raquo;</span>
+					      </a>
+					    </li>
+					  </ul>
+					</nav>				
+			<button type="submit" class="btn btn-primary">Read</button>
 			</div>
-			
-			<div class="form-group">
-		    	<label for="user" class="col-sm-2 control-label">Receiver ID</label>
-		    	<div class="col-sm-4">
-		      	<input type="text" class="form-control" name="tId" placeholder="Receiver ID" value=<%if(rId!=null) %><%=rId %>>
-		      	</div>
-		  	</div>
-		  	
-		  	<div class="form-group">
-		    	<label for="user" class="col-sm-2 control-label">Title</label>
-		    	<div class="col-sm-4">
-		      	<input type="text" class="form-control" name="title" placeholder="Title" >
-		      	</div>
-		  	</div>
-			
-			<hr><br><br>
-		 	<div class="form-group">
-           		<script id="container" name="content" type="text/plain" style="width:100%;height:300px"></script>
-           	</div>
-           	<br>
-           	<div class="form-group">
-    			<a href="#"><button class="btn btn-primary" type="submit">Submit</button></a>
-  			</div>
-        </form> 
-        <hr>
-              
-  	</div><!--/col-span-9-->
+		</div>
+		</form>
+	 </div>
+ </div>		  
 </div>
-</div>
-</div>
+<%
+%>
 <!-- /Main -->
-
-
-<!-- 配置文件 -->
-<script type="text/javascript" src="../uEditor/ueditor.config.js"></script>
-<!-- 编辑器源码文件 -->
-<script type="text/javascript" src="../uEditor/ueditor.all.js"></script>
-<!-- 实例化编辑器 -->
-<script type="text/javascript">
-    var ue = UE.getEditor('container');
-</script>
-
 </body>
 </html>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="company.model.*,company.model.util.*,javax.persistence.EntityManager"%>
+    pageEncoding="UTF-8" import="company.model.*,company.model.util.*,javax.persistence.EntityManager,java.util.*"%>
     <!DOCTYPE html>  
 <html>
 <head>
@@ -76,7 +76,13 @@
           </a>
             <ul class="list-unstyled collapse in" id="userMenu">
                 <li class="active"> <a href=<%=path+".jsp"%>><i class="glyphicon glyphicon-home"></i> Home</a></li>
-                <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> Messages <span class="badge badge-info">4</span></a></li>
+                <li><a href="./messageIndex.jsp"><i class="glyphicon glyphicon-envelope"></i> Messages <span class="badge badge-info">
+                <% 
+			  		List<Message> messages = ManagedMessageBean.getByToTypeIdStatus(session.getAttribute("type").toString(),
+			  				Integer.parseInt(session.getAttribute("user").toString()),"YES");
+			  	%>
+			  	<%=messages.size()%>
+                </span></a></li>
                 <li><a href=<%=path+"Profile.jsp"%>><i class="glyphicon glyphicon-user"></i> Profile</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Management</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-flag"></i> Reports</a></li>
@@ -96,6 +102,8 @@
       	<hr>
       		<%if(title.equals("Administriation")){%>
       			<a href="./managerIndex.jsp"><button class="btn btn-primary" type="button">Manager Index</button></a>
+      		<br><br><br>
+      			<a href="./addNotice.jsp"><button class="btn btn-primary" type="button">Add Notices</button></a>
       		<br><br><br>
       		<%} else if(title.equals("Manager")){%>
       			<a href="./employeeIndex.jsp"><button class="btn btn-primary" type="button">Employee Index</button></a>

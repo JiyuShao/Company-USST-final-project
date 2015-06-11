@@ -18,7 +18,7 @@
 		  String title = "";
 		  Integer pageNum = 1;
 		  Integer totalPages = 0;
-		  Integer pageSize = 3;
+		  Integer pageSize = 10;
 		  try{
 			  pageNum =Integer.parseInt(request.getParameter("pageNum"));
 		  }catch(Exception e){}
@@ -84,7 +84,13 @@
           </a>
             <ul class="list-unstyled collapse in" id="userMenu">
                 <li class="active"> <a href=<%=path+".jsp"%>><i class="glyphicon glyphicon-home"></i> Home</a></li>
-                <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> Messages <span class="badge badge-info">4</span></a></li>
+                <li><a href="./messageIndex.jsp"><i class="glyphicon glyphicon-envelope"></i> Messages <span class="badge badge-info">
+                <% 
+			  		List<Message> messages = ManagedMessageBean.getByToTypeIdStatus(session.getAttribute("type").toString(),
+			  				Integer.parseInt(session.getAttribute("user").toString()),"YES");
+			  	%>
+			  	<%=messages.size()%>
+                </span></a></li>
                 <li><a href=<%=path+"Profile.jsp"%>><i class="glyphicon glyphicon-user"></i> Profile</a></li>
                 <li><a href="./management.jsp"><i class="glyphicon glyphicon-cog"></i> Management</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-flag"></i> Reports</a></li>

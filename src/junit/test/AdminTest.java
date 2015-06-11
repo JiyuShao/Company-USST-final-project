@@ -17,12 +17,14 @@ import org.junit.Test;
 import company.model.Admin;
 import company.model.Employee;
 import company.model.Manager;
+import company.model.Message;
 import company.model.Notice;
 import company.model.Signin;
 import company.model.util.JPAResourceBean;
 import company.model.util.ManagedAdminBean;
 import company.model.util.ManagedEmployeeBean;
 import company.model.util.ManagedManagerBean;
+import company.model.util.ManagedMessageBean;
 import company.model.util.ManagedNoticeBean;
 import company.model.util.ManagedSigninBean;
 
@@ -226,4 +228,31 @@ public class AdminTest {
 		System.out.print(notice.getTitle());
 	}
 	
+	//Message Functions
+	@Test
+	public void sendMessage() {
+		Message message = new Message();
+		String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		
+		message.setTitle("Notice3");
+		message.setContent("Content3");
+		message.setDate(date);
+		message.setFid(1);
+		message.setFtype("Employee");
+		message.setTid(1);
+		message.setTtype("Manager");
+		message.setStatus("YES");
+		ManagedMessageBean.createNewMessage(message);
+	}
+	
+	@Test
+	public void getMessages() {
+		List<Message> messages = ManagedMessageBean.getByToTypeIdStatus("Manager", 1,"NO");
+		System.out.print(messages.size());
+	}
+	
+	@Test
+	public void updateMessageStatus() {
+		ManagedMessageBean.updateStatusByMessageId(3, "YES");
+	}
 }
