@@ -173,6 +173,12 @@ public class AdminTest {
 		em.close();
 		
 	}
+	@Test
+	public void getAllEmployee() {
+		List<Employee> employees = ManagedEmployeeBean.getAllEmployees();
+		System.out.print(employees.get(0).getName());
+	}
+	
 	//SignIn functions
 	@Test
 	public void addSignIn() {

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import company.model.Admin;
 import company.model.Signin;
 
 public class ManagedSigninBean {
@@ -49,4 +50,6 @@ public class ManagedSigninBean {
 	    
 	    return (List<Signin>) query.getResultList();
 	}
+	
+	
 }

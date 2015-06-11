@@ -1,6 +1,9 @@
 package company.model.util;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import company.model.Employee;
 import company.model.Manager;
@@ -76,5 +79,14 @@ public class ManagedEmployeeBean {
 	    }finally{
 	        em.close();
 	    }
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<Employee> getAllEmployees(){
+	    EntityManager em = JPAResourceBean.getEMF().createEntityManager();
+	    em.getTransaction().begin();
+	    Query query=em.createQuery("select o from Employee o");
+	    
+	    return (List<Employee>) query.getResultList();
 	}
 }
